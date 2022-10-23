@@ -1,0 +1,46 @@
+.hero {
+    margin: 0 auto;
+    background-image: url("../../assets/images/hero-bg.jpg");
+    background-size: cover;
+    background-position-y: bottom;
+    height: 650px;
+    width: 100%;
+    max-width: 1170px;
+    color: $white-color;
+    @include flex-center;
+    flex-direction: column;
+    position: relative;
+    margin-top: 60px;
+    &::after {
+        content: '';
+        background: rgba(0, 0, 0, 0.5);
+        position: absolute;
+        inset: 0;
+    }
+
+    img {
+        width: 200px;
+        height: 200px;
+    }
+
+}
+
+.hero_inner {
+    width: 100%;
+    max-width: 380px;
+    text-align: center;
+    z-index: 1;
+
+    p {
+        margin-bottom: 32px;
+    }
+
+    button {
+        margin: 0 auto;
+    }
+}
+
+.title {
+    color: $white-color;
+    margin-bottom: 21px;
+}

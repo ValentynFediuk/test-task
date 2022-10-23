@@ -1,0 +1,25 @@
+body {
+    font-family: $main-font;
+    color: $body-text-color;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 26px;
+    background: $main-bg-color;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+h1,
+h2,
+h3
+{
+    font-size: 40px;
+    line-height: 40px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.87);
+    text-align: center;
+}

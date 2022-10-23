@@ -1,0 +1,20 @@
+@import 'mixins';
+@import 'reset';
+@import 'global';
+@import 'fonts';
+@import 'variables';
+
+.mobile-visible {
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+
+    .mobile-visible {
+        display: block;
+    }
+
+    .mobile-hidden {
+        display: none;
+    }
+}

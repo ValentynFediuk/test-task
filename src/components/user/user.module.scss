@@ -1,0 +1,25 @@
+.user {
+    background: $white-color;
+    border-radius: 16px;
+    overflow: hidden;
+    padding: 20px;
+
+    img {
+        margin: 0 auto 20px auto;
+    }
+
+    p:first-of-type {
+        margin-bottom: 20px;
+    }
+
+    p, a {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        text-align: center;
+        overflow: hidden;
+        width: min-content;
+        max-width: 100%;
+        display: block;
+        margin: 0 auto;
+    }
+}
