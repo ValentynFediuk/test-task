@@ -6,7 +6,7 @@
     height: 650px;
     width: 100%;
     max-width: 1170px;
-    color: $white-color;
+    color: $white;
     @include flex-center;
     flex-direction: column;
     position: relative;
@@ -41,6 +41,6 @@
 }
 
 .title {
-    color: $white-color;
+    color: $white;
     margin-bottom: 21px;
 }

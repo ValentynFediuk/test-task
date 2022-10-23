@@ -1,43 +1,33 @@
 .wrapper {
+    width: 100%;
     --pure-material-safari-helper1: rgb(var(--pure-material-primary-rgb, 33, 150, 243));
     position: relative;
     display: inline-block;
     padding-top: 6px;
-    font-family: var(--pure-material-font, "Roboto", "Segoe UI", BlinkMacSystemFont, system-ui, -apple-system);
+    font-family: var(--pure-material-font, 'Nunito-Regular', "Segoe UI", BlinkMacSystemFont, system-ui, -apple-system);
     font-size: 16px;
     line-height: 1.5;
     overflow: hidden;
-    & .input__error {
+
+    .error_text {
         padding-top: 10px;
         color: $input-color-error;
     }
-    > input,
-    > textarea {
+
+    .helper_text {
+        color: $gray;
+        font-size: 12px;
+        line-height: 14px;
+        margin-left: 16px;
+    }
+
+    input {
         box-sizing: border-box;
-        margin: 0;
-        border: solid 1px; /* Safari */
-        border-color: $input-color;
+        margin: 0 0 4px 0;
+        border: solid 1px $input-color; /* Safari */
         border-top-color: transparent;
         border-radius: 4px;
-        padding: 15px 13px 15px;
-        width: 100%;
-        height: inherit;
-        color: $input-color;
-        background-color: transparent;
-        box-shadow: none; /* Firefox */
-        font-family: inherit;
-        font-size: inherit;
-        line-height: inherit;
-        caret-color: $input-color;
-        transition: border 0.2s, box-shadow 0.2s;
-    }    > textarea {
-        box-sizing: border-box;
-        margin: 0;
-        border: solid 1px; /* Safari */
-        border-color: $input-color;
-        border-top-color: transparent;
-        border-radius: 4px;
-        padding: 6px 16px 6px;
+        padding: 14px 13px 14px;
         width: 100%;
         height: inherit;
         color: $input-color;
@@ -49,12 +39,13 @@
         caret-color: $input-color;
         transition: border 0.2s, box-shadow 0.2s;
     }
-    > input:-webkit-autofill,
-    > input:-webkit-autofill:focus {
+
+    input:-webkit-autofill,
+    input:-webkit-autofill:focus {
         transition: background-color 600000s 0s, color 600000s 0s;
     }
-    > input + span,
-    > textarea + span {
+
+    input + span {
         position: absolute;
         top: 0;
         left: 0;
@@ -68,10 +59,9 @@
         cursor: text;
         transition: color 0.2s, font-size 0.2s, line-height 0.2s;
     }
-    > input + span::before,
-    > input + span::after,
-    > textarea + span::before,
-    > textarea + span::after {
+
+    input + span::before,
+    input + span::after {
         content: "";
         display: block;
         box-sizing: border-box;
@@ -84,105 +74,95 @@
         box-shadow: inset 0 1px transparent;
         transition: border-color 0.2s, box-shadow 0.2s;
     }
-    > input + span::before,
-    > textarea + span::before {
+
+    input + span::before {
         margin-right: 4px;
         border-left: solid 1px transparent;
         border-radius: 4px 0;
     }
-    > input + span::after,
-    > textarea + span::after {
+
+    input + span::after {
         flex-grow: 1;
         margin-left: 4px;
         border-right: solid 1px transparent;
         border-radius: 0 4px;
     }
-    &:hover > input,
-    &:hover > textarea {
+
+    &:hover > input {
         border-color: $input-color-hover;
         border-top-color: transparent;
     }
+
     &:hover > input + span::before,
-    &:hover > textarea + span::before,
-    &:hover > input + span::after,
-    &:hover > textarea + span::after {
+    &:hover > input + span::after {
         border-top-color: $input-color-hover;
     }
-    &:hover > input:not(:focus):placeholder-shown,
-    &:hover > textarea:not(:focus):placeholder-shown {
+
+    &:hover > input:not(:focus):placeholder-shown {
         border-color: $input-color;
     }
-    > input:not(:focus):placeholder-shown,
-    > textarea:not(:focus):placeholder-shown {
+
+    input:not(:focus):placeholder-shown {
         border-top-color: $input-color;
     }
-    > input:not(:focus):placeholder-shown + span,
-    > textarea:not(:focus):placeholder-shown + span {
+
+    input:not(:focus):placeholder-shown + span {
         font-size: inherit;
-        line-height: 68px;
+        line-height: 67px;
     }
-    > input:not(:focus):placeholder-shown + span::before,
-    > textarea:not(:focus):placeholder-shown + span::before,
-    > input:not(:focus):placeholder-shown + span::after,
-    > textarea:not(:focus):placeholder-shown + span::after {
+
+    input:not(:focus):placeholder-shown + span::before,
+    input:not(:focus):placeholder-shown + span::after {
         border-top-color: transparent;
     }
-    > input:focus,
-    > textarea:focus {
+
+    input:focus {
         border-color: $input-color-focus;
         border-top-color: transparent;
         box-shadow: inset 1px 0 $input-color-focus, inset -1px 0 $input-color-focus, inset 0 -1px $input-color-focus;
         outline: none;
         color: $input-text-color-focus;
     }
-    > input:focus + span,
-    > textarea:focus + span {
+
+    input:focus + span {
         color: $input-color-focus;
     }
-    > input:focus + span::before,
-    > input:focus + span::after,
-    > textarea:focus + span::before,
-    > textarea:focus + span::after {
-        border-top-color: $input-color-focus !important;
+
+    input:focus + span::before,
+    input:focus + span::after {
+        border-top-color: $input-color-focus;
         box-shadow: inset 0 1px $input-color-focus;
     }
-    > input:disabled,
-    > input:disabled + span,
-    > textarea:disabled,
-    > textarea:disabled + span {
-        border-color: $input-color-disabled !important;
-        border-top-color: transparent !important;
+
+    input:disabled,
+    input:disabled + span {
+        border-color: $input-color-disabled;
+        border-top-color: transparent;
         color: $input-color-disabled;
         pointer-events: none;
     }
-    > input:disabled + span::before,
-    > input:disabled + span::after,
-    > textarea:disabled + span::before,
-    > textarea:disabled + span::after {
-        border-top-color: $input-color-disabled !important;
+
+    input:disabled + span::before,
+    input:disabled + span::after {
+        border-top-color: $input-color-disabled;
     }
-    > input:disabled:placeholder-shown,
-    > input:disabled:placeholder-shown + span,
-    > textarea:disabled:placeholder-shown,
-    > textarea:disabled:placeholder-shown + span {
-        border-top-color: $input-color-disabled !important;
+
+    input:disabled:placeholder-shown,
+    input:disabled:placeholder-shown + span {
+        border-top-color: $input-color-disabled;
     }
-    > input:disabled:placeholder-shown + span::before,
-    > input:disabled:placeholder-shown + span::after,
-    > textarea:disabled:placeholder-shown + span::before,
-    > textarea:disabled:placeholder-shown + span::after {
-        border-top-color: transparent !important;
+
+    input:disabled:placeholder-shown + span::before,
+    input:disabled:placeholder-shown + span::after {
+        border-top-color: transparent;
     }
-    @media not all and (min-resolution:.001dpcm) {
+
+    @media not all and (min-resolution: .001dpcm) {
         @supports (-webkit-appearance:none) {
-            > input,
-            > input + span,
-            > textarea,
-            > textarea + span,
-            > input + span::before,
-            > input + span::after,
-            > textarea + span::before,
-            > textarea + span::after {
+            input,
+            input + span,
+            input + span::before,
+            input + span::after {
                 transition-duration: 0.1s;
             }
         }
