@@ -1,10 +1,13 @@
 import styles from './Singup.module.scss'
 import ButtonPrimary from '../ui/ButtonPrimary/ButtonPrimary.jsx';
-import {OutlinedInput} from '../ui/OutlinedInput/OutlinedInput.jsx';
+import { OutlinedInput } from '../ui/OutlinedInput/OutlinedInput.jsx';
 import { useEffect, useState } from 'react';
 import { Dropzone } from "../Dropzone/Dropzone.jsx";
 import { $api } from '../../http/axios';
-import { useToken } from '../../hooks'
+import { useToken, useUsers } from '../../hooks'
+import {useContext} from 'react'
+import {UsersDispatchContext, UsersContext} from '../../store'
+import {Spiner} from '../index'
 
 const NAME_VALIDATION_REGEXP = /^[A-Za-z0-9_]{2,60}$/
 const EMAIL_VALIDATION_REGEXP = /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/
@@ -34,6 +37,9 @@ const Signup = () => {
     const [selectedRadioBtn, setSelectedRadioBtn] = useState('radio-1')
     const [positions, setPositions] = useState([])
     const isRadioSelected = (value) => selectedRadioBtn === value
+
+    const usersState = useContext(UsersContext)
+    const dispatch = useContext(UsersDispatchContext)
 
     const getPositions = async () => {
         try {
@@ -87,6 +93,12 @@ const Signup = () => {
         }))
     }
 
+    const updateUsersList = async () => {
+        dispatch({ type: 'loadUsers', ...usersState, loading: true, usersPage: 1 })
+        const {users} = await useUsers(usersState.usersPage)
+        dispatch({ type: 'loadUsers', ...usersState, users: [...users], loading: false })
+    }
+
     const handleSubmit = async (event) => {
         event.preventDefault()
 
@@ -98,14 +110,14 @@ const Signup = () => {
         formData.append("photo", avatar[0]);
         try {
             const token = await useToken()
-            console.log(token)
-            const {data} = await $api.post('/users', formData, {headers: {"Token": token}})
-            console.log(data)
+            await $api.post('/users', formData, {headers: {"Token": token}})
+            updateUsersList()
         } catch(error) {
             console.log(error)
         }
     }
 
+    
     useEffect(() => {
         getPositions()
     }, [])
@@ -119,9 +131,7 @@ const Signup = () => {
                 ...prevState,
                 isFromValid: true
         }))
-
-        console.log(avatar[0], 'ava')
-
+        console.log(avatar)
     }, [name, email, phone, avatar])
 
     return (
@@ -174,10 +184,19 @@ const Signup = () => {
                             setFormState={setFormState}
                         >
                             <button>Upload</button>
-                            <p>Upload your photo</p>
+                            {avatar[0] ?
+                             <p>{avatar[0]['name']}</p> 
+                            :
+                            <p>Upload your photo</p>}
+                            
                         </Dropzone>
                     </div>
-                    <ButtonPrimary type='submit' disabled={!isFromValid}>Sign up</ButtonPrimary>
+                    {usersState.loading
+                        ? 
+                        <Spiner />
+                        :
+                        <ButtonPrimary type='submit' disabled={!isFromValid}>Sign up</ButtonPrimary>
+                    }
                 </form>
             </div>
         </section>

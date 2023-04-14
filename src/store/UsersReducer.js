@@ -6,7 +6,8 @@ export const UsersReducer = (usersState, action) => {
       return {
         ...usersState,
         users: action.users,
-        loading: false
+        loading: action.loading,
+        usersPage: action.usersPage,
       }
     }
    
