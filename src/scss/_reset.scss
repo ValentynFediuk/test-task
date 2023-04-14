@@ -23,7 +23,8 @@ figure,
 figcaption,
 blockquote,
 dl,
-dd {
+dd,
+input[type="radio"] {
   margin: 0;
 }
 

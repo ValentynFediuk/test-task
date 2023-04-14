@@ -1,4 +1,4 @@
-import styles from './hero.module.scss'
+import styles from './Hero.module.scss'
 import ButtonPrimary from '../ui/ButtonPrimary/ButtonPrimary.jsx';
 
 const Hero = () => {

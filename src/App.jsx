@@ -1,16 +1,28 @@
-import Header from './components/header/Header.jsx';
-import Hero from './components/hero/Hero.jsx';
-import Users from './components/users/Users';
-import Signup from './components/signup/Signup.jsx';
+import Header from './components/Header/Header.jsx';
+import Hero from './components/Hero/Hero.jsx';
+import Users from './components/Users/Users';
+import Signup from './components/Signup/Signup.jsx';
+import {UsersContext, UsersReducer, UsersDispatchContext} from './store'
+import {useReducer} from 'react'
 
 const App = () => {
+    const [usersState, dispatch] = useReducer(UsersReducer, {
+        users: [], loading: true, usersPage: 1
+    })
+
+
+
 
     return (
         <>
             <Header/>
             <Hero/>
-            <Users/>
-            <Signup/>
+            <UsersContext.Provider value={usersState}>
+                <UsersDispatchContext.Provider value={dispatch}>
+                    <Users/>
+                    <Signup/>
+                </UsersDispatchContext.Provider>
+            </UsersContext.Provider>
         </>
     )
 }

@@ -1,10 +1,17 @@
-import styles from './outlined-input.module.scss'
+import styles from './Outlined-input.module.scss'
+import clsx from 'clsx'
 
-export const OutlinedInput = ({ error, label, type, helperText, ...props }) => (
-        <label className={styles.wrapper}>
-            <input placeholder={" "} type={type} {...props} />
-            <span>{label}</span>
-            {error && <p className={styles.error_text}>{error.message}</p>}
-            <p className={styles.helper_text}>{helperText}</p>
-        </label>
+export const OutlinedInput = ({ error, errorMessage, label, type, value, helperText, ...props }) => (
+    <label className={clsx(styles.wrapper, error && styles.error, value && styles.filled) }>
+        <input placeholder={" "} type={type} {...props} />
+        <span>{label}</span>
+        {error
+         &&
+         <p className={styles.error_text}>{errorMessage}</p>
+        }
+        {!error
+         &&
+         <p className={styles.helper_text}>{helperText}</p>
+        }
+    </label>
 );
