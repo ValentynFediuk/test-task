@@ -1,14 +1,14 @@
-import styles from './button-primary.module.scss'
-import classLister from 'css-module-class-lister/src';
+import styles from './Button-primary.module.scss'
+import clsx from 'clsx'
 
-const classes = classLister(styles);
-
-const ButtonPrimary = ({children, disabled}) => {
+const ButtonPrimary = ({children, onClick, disabled, type='button'}) => {
 
     return (
         <button
+            className={clsx(styles.button, disabled && styles.button_disabled)}
+            onClick={onClick}
             disabled={disabled}
-            className={disabled ? classes('button', 'button_disabled') : styles.button}
+            type={type}
         >
             {children}
         </button>

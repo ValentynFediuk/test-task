@@ -1,3 +1,26 @@
 .wrapper {
+    display: flex;
+    align-items: center;
+  cursor: pointer;
+  & button {
+    border: 1px solid $black;
+    border-radius: 4px 0 0 4px;
+    padding: 14px 15px;
+  }
+  & p {
+    display: block;
+    color: $input-color;
+    border: 1px solid $input-color;
+    border-left: none;
+    border-radius: 0 4px 4px 0;
+    padding: 14px 16px;
+    flex: 1;
+  }
+}
 
+.dropzone {
+  & .error {
+    color: $input-color-error;
+    padding-top: 10px;
+  } 
 }

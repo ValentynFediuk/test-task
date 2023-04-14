@@ -1,5 +1,5 @@
 import sprite from '../../assets/images/sprite.svg'
-import styles from './header.module.scss'
+import styles from './Header.module.scss'
 import ButtonPrimary from '../ui/ButtonPrimary/ButtonPrimary.jsx';
 
 const Header = () => {
