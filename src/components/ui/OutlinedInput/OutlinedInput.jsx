@@ -3,7 +3,7 @@ import clsx from 'clsx'
 
 export const OutlinedInput = ({ error, errorMessage, label, type, value, helperText, ...props }) => (
     <label className={clsx(styles.wrapper, error && styles.error, value && styles.filled) }>
-        <input placeholder={" "} type={type} {...props} />
+        <input placeholder={" "} type={type} value={value} {...props} />
         <span>{label}</span>
         {error
          &&

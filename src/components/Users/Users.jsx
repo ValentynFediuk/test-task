@@ -1,35 +1,37 @@
-import ButtonPrimary from '../ui/ButtonPrimary/ButtonPrimary.jsx';
 import styles from './Users.module.scss'
-import User from '../User/User.jsx';
 import {useEffect, useState} from "react";
-import {UsersContext, UsersDispatchContext} from '../../store'
+import {UsersContext, UsersDispatchContext} from 'store'
 import {useContext} from 'react'
-import {useUsers} from '../../hooks'
-import { Spiner } from '../index.js';
+import {useUsers} from 'hooks'
+import { Spiner, Button, Title, User } from 'components';
 
 const Users = () => {
     const usersState = useContext(UsersContext)
     const dispatch = useContext(UsersDispatchContext)
 
     const [usersLoading, setUsertLoading] = useState(true)
+    const [totalPages, setTotalPages] = useState(null)
 
     const showMoreUsers = async (event) => {
         event.preventDefault()
+        dispatch({ type: 'loadUsers', ...usersState, usersPage: usersState.usersPage++ })
 
-        setUsertLoading(true)
-        dispatch({ type: 'loadUsers', users: usersState.users, usersPage: usersState.usersPage++ })
-
-        const {users} = await useUsers(usersState.usersPage)
-        dispatch({ type: 'loadUsers', ...usersState, users: [...usersState.users, ...users] })
-
-        setUsertLoading(false)
+        console.log(totalPages, usersState.usersPage)
+        if (usersState.usersPage <= totalPages) {
+            setUsertLoading(true)
+            const {users, total_pages} = await useUsers(usersState.usersPage)
+            setTotalPages(total_pages)
+            dispatch({ type: 'loadUsers', ...usersState, users: [...usersState.users, ...users] })
+            setUsertLoading(false)
+        }
     }
 
     const getUsers = async () => {
         setUsertLoading(true)
-        const {users} = await useUsers(usersState.usersPage)
+        const {users, total_pages} = await useUsers(usersState.usersPage)
+        setTotalPages(total_pages)
         setUsertLoading(false)
-        dispatch({ type: 'loadUsers', users: users,  usersPage: usersState.usersPage++})
+        dispatch({ type: 'loadUsers', usersPage: usersState.usersPage, users: users})
     }
 
     useEffect(() => {
@@ -37,18 +39,23 @@ const Users = () => {
     }, []);
 
     return (
-        <section className={styles.users}>
+        <section id='users' className={styles.users}>
             <div className='container'>
-                <h2>Working with GET request</h2>
+                <Title typeTitle='h2' color='black'>Working with GET request</Title>
                 <div className={styles.users_list}>
                     {usersState.users?.map((user) => (
                         <User key={user.id} {...user}/>
                     ))}
                 </div>
-                {usersLoading ? <Spiner />
-                :
-                <ButtonPrimary onClick={(event) => showMoreUsers(event)}>Show more</ButtonPrimary>
+                {usersState.usersPage < totalPages && 
+                    <>
+                        { usersLoading ? <Spiner />
+                        :
+                        <Button typeBtn='submit' appearance='primary' onClick={(event) => showMoreUsers(event)} text='Show more' />
+                        }
+                    </>
                 }
+                
             </div>
         </section>
     )

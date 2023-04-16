@@ -1,6 +1,6 @@
 import sprite from '../../assets/images/sprite.svg'
 import styles from './Header.module.scss'
-import ButtonPrimary from '../ui/ButtonPrimary/ButtonPrimary.jsx';
+import {Button} from 'components'
 
 const Header = () => {
 
@@ -17,8 +17,8 @@ const Header = () => {
                         </svg>
                     </a>
                     <div className={styles.button_wrapper}>
-                        <ButtonPrimary>Users</ButtonPrimary>
-                        <ButtonPrimary>Sign up</ButtonPrimary>
+                        <Button link='users' typeBtn='button' appearance='primary' text='Users' />
+                        <Button link='singin' typeBtn='button' appearance='primary' text='Sign up' />
                     </div>
                 </nav>
             </div>

@@ -17,4 +17,16 @@ export default defineConfig({
       },
     },
   },
+  resolve: {
+    alias: {
+      'assets': path.resolve(__dirname, './src/assets'),
+      'components': path.resolve(__dirname, './src/components/index'),
+      'hooks': path.resolve(__dirname, './src/hooks/index'),
+      'store': path.resolve(__dirname, './src/store/index'),
+      'http': path.resolve(__dirname, './src/http/index'),
+      'layouts': path.resolve(__dirname, './src/layouts/index'),
+      'pages': path.resolve(__dirname, './src/pages/index'),
+      'features': path.resolve(__dirname, './src/features/index'),
+    },
+  },
 })

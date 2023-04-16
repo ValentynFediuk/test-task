@@ -1,0 +1,20 @@
+.button {
+  min-width: 100px;
+  padding: 4px 20px;
+  border-radius: 80px;
+  font-weight: 400;
+  text-align: center;
+  //transition: 0.4s ease-in-out;
+  &.primary {
+    background: $primary;
+    color: $black;
+    &:hover {
+      background: $button-bg-hover;
+    }
+  }
+  &.disabled {
+    color: $button-color-disabled;
+    background: $button-bg-disabled;
+    pointer-events: none;
+  }
+}

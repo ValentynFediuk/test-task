@@ -4,13 +4,13 @@ export const UsersReducer = (usersState, action) => {
       case 'loadUsers': {
 
       return {
+        ...usersState,
         usersPage: action.usersPage,
         users: action.users,
       }
     }
 
     case 'registerUser': {
-      console.log(usersState)
 
       return {
         users: action.users,
