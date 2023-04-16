@@ -7,11 +7,8 @@ import {useReducer} from 'react'
 
 const App = () => {
     const [usersState, dispatch] = useReducer(UsersReducer, {
-        users: [], loading: true, usersPage: 1
+        users: [], usersPage: 1
     })
-
-
-
 
     return (
         <>

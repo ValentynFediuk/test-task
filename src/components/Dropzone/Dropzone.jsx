@@ -3,36 +3,31 @@ import {useDropzone} from 'react-dropzone'
 import styles from './Dropzone.module.scss'
 
 export const Dropzone = ({children, formState, setFormState}) => {
-    const acceptedFileTypes = ['image/jpeg', 'image/jpg'];
+    const acceptedFileTypes = {
+        'image/jpeg': ['.jpeg', '.jpg']
+    };
     const maxFileSize = 5 * 1024 * 1024; // 5 Mb in bytes
     const minPhotoSize = 70; // 70x70px
     const maxFiles = 1;
+    
  
     const {errors} = formState
     const onDrop = useCallback((acceptedFiles, rejectedFiles) => {
-        const file = acceptedFiles[0];
-        if (file.type && !acceptedFileTypes.includes(file.type)) {
-            setFormState((prevState) => ({
-                ...prevState,
+        const file = acceptedFiles[0]
+
+        if (rejectedFiles[0]) {
+            rejectedFiles.forEach((file) => {
+              const { message } = file.errors[0];
+              setFormState((prevState) => ({
+                ...formState,
                 errors: {
-                    ...errors,
-                    avatarError: true,
-                    avatarErrorMessage: 'The photo format must be jpeg/jpg type.'
-                }
-            }))
-            return;
-        }
-        if (file.size && file.size > maxFileSize) {
-        console.log('File too large:', file.size);
-        setFormState((prevState) => ({
-            ...prevState,
-            errors: {
-                ...errors,
-                avatarError: true,
-                avatarErrorMessage: 'The photo size must not be greater than 5 Mb'
-            }
-        }))
-        return;
+                  ...prevState.errors,
+                  avatarError: true,
+                  avatarErrorMessage: message,
+                },
+              }));
+            });
+            return
         }
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -54,6 +49,11 @@ export const Dropzone = ({children, formState, setFormState}) => {
             setFormState((prevState) => ({
                 ...prevState,
                 avatar: acceptedFiles,
+                errors: {
+                    ...errors,
+                    avatarError: false,
+                    avatarErrorMessage: ''
+                }
             }))
           };
         };

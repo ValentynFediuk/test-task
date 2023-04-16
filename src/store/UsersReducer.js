@@ -4,20 +4,20 @@ export const UsersReducer = (usersState, action) => {
       case 'loadUsers': {
 
       return {
-        ...usersState,
-        users: action.users,
-        loading: action.loading,
         usersPage: action.usersPage,
+        users: action.users,
       }
     }
-   
+
     case 'registerUser': {
+      console.log(usersState)
 
       return {
-        ...usersState,
-        users: action.user
+        users: action.users,
+        usersPage: 1
       }
     }
+
     default: {
       throw Error('Unknown action')
     }

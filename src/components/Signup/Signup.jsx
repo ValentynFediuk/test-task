@@ -93,12 +93,6 @@ const Signup = () => {
         }))
     }
 
-    const updateUsersList = async () => {
-        dispatch({ type: 'loadUsers', ...usersState, loading: true, usersPage: 1 })
-        const {users} = await useUsers(usersState.usersPage)
-        dispatch({ type: 'loadUsers', ...usersState, users: [...users], loading: false })
-    }
-
     const handleSubmit = async (event) => {
         event.preventDefault()
 
@@ -111,12 +105,12 @@ const Signup = () => {
         try {
             const token = await useToken()
             await $api.post('/users', formData, {headers: {"Token": token}})
-            updateUsersList()
+            const {users} = await useUsers(1)
+            dispatch({ type: 'registerUser', users: users })
         } catch(error) {
             console.log(error)
         }
     }
-
     
     useEffect(() => {
         getPositions()
@@ -131,7 +125,6 @@ const Signup = () => {
                 ...prevState,
                 isFromValid: true
         }))
-        console.log(avatar)
     }, [name, email, phone, avatar])
 
     return (
