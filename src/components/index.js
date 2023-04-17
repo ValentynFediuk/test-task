@@ -1,8 +1,10 @@
-export {Spiner} from './ui/Spiner/Spiner'
-export {Button} from './ui/Button/Button'
-export {Title} from './ui/Title/Title'
-export {Hero} from './Hero/Hero'
-export {User} from './User/User'
-export {Signup} from './Signup/Signup'
-
-
+export * from './ui/Spiner/Spiner'
+export * from './ui/Button/Button'
+export * from './ui/Title/Title'
+export * from './ui/OutlinedInput/OutlinedInput'
+export * from './Header/Header'
+export * from './Hero/Hero'
+export * from './User/User'
+export * from './Users/Users'
+export * from './Signup/Signup'
+export * from './Dropzone/Dropzone'

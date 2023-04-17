@@ -1,13 +1,8 @@
 import clsx from 'clsx'
+import { React } from 'react'
 import styles from './Title.module.scss'
 
-export const Title = ({
-  children,
-  color,
-  typeTitle,
-  className,
-  ...props
-}) => {
+export const Title = ({ children, color, typeTitle, className, ...props }) => {
   const classNameBuilder = clsx(styles.title, className, {
     [styles.white]: color === 'white',
     [styles.black]: color === 'black',

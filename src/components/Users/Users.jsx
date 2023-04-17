@@ -1,64 +1,72 @@
+import { useEffect, useState, useContext, React } from 'react'
 import styles from './Users.module.scss'
-import {useEffect, useState} from "react";
-import {UsersContext, UsersDispatchContext} from 'store'
-import {useContext} from 'react'
-import {useUsers} from 'hooks'
-import { Spiner, Button, Title, User } from 'components';
+import { Spiner, Button, Title, User } from 'components'
+import { useUsers } from 'hooks'
+import { UsersContext, UsersDispatchContext } from 'store'
 
-const Users = () => {
-    const usersState = useContext(UsersContext)
-    const dispatch = useContext(UsersDispatchContext)
+export function Users() {
+  const usersState = useContext(UsersContext)
+  const dispatch = useContext(UsersDispatchContext)
 
-    const [usersLoading, setUsertLoading] = useState(true)
-    const [totalPages, setTotalPages] = useState(null)
+  const { usersList } = usersState
 
-    const showMoreUsers = async (event) => {
-        event.preventDefault()
-        dispatch({ type: 'loadUsers', ...usersState, usersPage: usersState.usersPage++ })
+  const [usersLoading, setUsertLoading] = useState(true)
+  const [pagesLimit, setPagesLimit] = useState(null)
 
-        console.log(totalPages, usersState.usersPage)
-        if (usersState.usersPage <= totalPages) {
-            setUsertLoading(true)
-            const {users, total_pages} = await useUsers(usersState.usersPage)
-            setTotalPages(total_pages)
-            dispatch({ type: 'loadUsers', ...usersState, users: [...usersState.users, ...users] })
-            setUsertLoading(false)
-        }
-    }
+  const showMoreUsers = async (event) => {
+    event.preventDefault()
+    dispatch({
+      type: 'loadUsers',
+      ...usersState,
+      usersPage: usersState.usersPage++,
+    })
 
-    const getUsers = async () => {
-        setUsertLoading(true)
-        const {users, total_pages} = await useUsers(usersState.usersPage)
-        setTotalPages(total_pages)
-        setUsertLoading(false)
-        dispatch({ type: 'loadUsers', usersPage: usersState.usersPage, users: users})
-    }
+    setUsertLoading(true)
+    const { users, total_pages } = await useUsers(usersState.usersPage)
+    setPagesLimit(total_pages)
+    dispatch({
+      type: 'loadUsers',
+      ...usersState,
+      usersList: [...usersList, ...users],
+    })
+    setUsertLoading(false)
+  }
 
-    useEffect(() => {
-        getUsers()
-    }, []);
+  const getUsers = async () => {
+    setUsertLoading(true)
+    const { users, total_pages } = await useUsers(usersState.usersPage)
+    setPagesLimit(total_pages)
+    dispatch({ type: 'loadUsers', usersList: users, usersPage: 1 })
+    setUsertLoading(false)
+  }
 
-    return (
-        <section id='users' className={styles.users}>
-            <div className='container'>
-                <Title typeTitle='h2' color='black'>Working with GET request</Title>
-                <div className={styles.users_list}>
-                    {usersState.users?.map((user) => (
-                        <User key={user.id} {...user}/>
-                    ))}
-                </div>
-                {usersState.usersPage < totalPages && 
-                    <>
-                        { usersLoading ? <Spiner />
-                        :
-                        <Button typeBtn='submit' appearance='primary' onClick={(event) => showMoreUsers(event)} text='Show more' />
-                        }
-                    </>
-                }
-                
-            </div>
-        </section>
-    )
+  useEffect(() => {
+    getUsers()
+  }, [])
+
+  return (
+    <section id="users" className={styles.users}>
+      <div className="container">
+        <Title typeTitle="h2" color="black">
+          Working with GET request
+        </Title>
+        <div className={styles.users_list}>
+          {usersList?.map((user) => (
+            <User key={user.id} {...user} />
+          ))}
+        </div>
+        {usersState.usersPage < pagesLimit &&
+          (usersLoading ? (
+            <Spiner />
+          ) : (
+            <Button
+              typeBtn="submit"
+              appearance="primary"
+              onClick={(event) => showMoreUsers(event)}
+              text="Show more"
+            />
+          ))}
+      </div>
+    </section>
+  )
 }
-
-export default Users

@@ -1,0 +1,95 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "plugin:react/recommended",
+        "airbnb",
+        "eslint:recommended",
+        "prettier"
+    ],
+    "overrides": [
+    ],
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "ignorePatterns": ["vite.config.js"],
+    "plugins": [
+        "react",
+        "autofix",
+        "react-hooks",
+        "prettier"
+    ],
+    "settings": {
+        "import/resolver": {
+          "alias": {
+            "map": [
+                ["components", "./src/components/index"],
+                ["assets", "./src/assets"],
+                ["hooks", "./src/hooks/index"],
+                ["store", "./src/store/index"],
+                ["http", "./src/http/index"]
+              ],
+            "extensions": [".js", ".jsx", ".json"]
+          }
+        }
+    },
+    "rules": {
+        "arrow-body-style": ["error", "as-needed"],
+        "react/self-closing-comp": ["error", { "component": true, "html": true }],
+        "autofix/no-unused-vars": [
+            "error",
+            {
+                "argsIgnorePattern": "^_",
+                "ignoreRestSiblings": true,
+                "destructuredArrayIgnorePattern": "^_"
+            }
+        ],
+        "import/order": [
+            "error",
+            {
+                "groups": [
+                "builtin",
+                "external",
+                "parent",
+                "sibling",
+                "index",
+                "object",   
+                "type"
+                ],
+                "pathGroups": [
+                {
+                    "pattern": "@/**/**",
+                    "group": "parent",
+                    "position": "before"
+                }
+                ],
+                "alphabetize": { "order": "asc" }
+            }
+        ],
+        "no-restricted-imports": [
+            "error",
+            { 
+                "patterns": ["../"] 
+            }
+        ],
+        "prettier/prettier": "error",
+        "react/jsx-props-no-spreading": "off",
+        "react/prop-types": "off",
+        "import/no-cycle": "off",
+        "react/no-unescaped-entities": "off",
+        "import/prefer-default-export": "off",
+        "import/no-default-export": "error",
+        "no-control-regex": "off",
+        "no-useless-escape": "off",
+        "no-unused-expressions": "off",
+        "no-param-reassign": "off",
+        "no-plusplus": "off",
+        "exhaustive-deps": "off",
+        "react-hooks/exhaustive-deps": "off",
+        "camelcase": "warn",
+        "react/destructuring-assignment": "warn"
+    }
+}

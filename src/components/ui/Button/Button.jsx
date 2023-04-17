@@ -1,41 +1,37 @@
 import clsx from 'clsx'
+import React from 'react'
 import styles from './Button.module.scss'
 
-export const Button = ({
-  children,
-  typeBtn,
-  appearance,
-  loadingData,
-  onClick,
-  text,
-  className,
-  ...props
-}) => {
-
-  const link = `#${text.replace(/\s+/g, '').toLowerCase()}`;
+export function Button({ typeBtn, appearance, onClick, text, className }) {
+  const link = `#${text.replace(/\s+/g, '').toLowerCase()}`
 
   const classNameBuilder = clsx(styles.button, className, {
     [styles.primary]: appearance === 'primary',
-    [styles.disabled]: appearance === 'disabled'
+    [styles.disabled]: appearance === 'disabled',
   })
 
   const buttonBuilder = () => {
     switch (typeBtn) {
       case 'button':
         return (
-          <a href={link} className={classNameBuilder}
-          {...props}>
+          <a href={link} className={classNameBuilder}>
             {text}
           </a>
         )
-        case 'submit':
+      case 'submit':
         return (
-          <button type='submit' className={classNameBuilder} onClick={onClick} {...props}>
+          <button type="submit" className={classNameBuilder} onClick={onClick}>
             {text}
           </button>
+        )
+      default:
+        return (
+          <a href={link} className={classNameBuilder}>
+            {text}
+          </a>
         )
     }
   }
 
   return buttonBuilder()
-};
+}

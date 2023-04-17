@@ -1,20 +1,17 @@
 export const UsersReducer = (usersState, action) => {
-    
-    switch (action.type) {
-      case 'loadUsers': {
-
+  switch (action.type) {
+    case 'loadUsers': {
       return {
         ...usersState,
         usersPage: action.usersPage,
-        users: action.users,
+        usersList: action.usersList,
       }
     }
 
     case 'registerUser': {
-
       return {
-        users: action.users,
-        usersPage: 1
+        usersList: action.usersList,
+        usersPage: 1,
       }
     }
 
