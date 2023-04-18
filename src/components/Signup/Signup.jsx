@@ -1,7 +1,14 @@
 import { $api } from 'http'
 import React, { useContext, useEffect, useState } from 'react'
 import styles from './Singup.module.scss'
-import { Dropzone, Button, Title, Spiner, OutlinedInput } from 'components'
+import {
+  Dropzone,
+  Button,
+  Title,
+  Spiner,
+  OutlinedInput,
+  SuccessModal,
+} from 'components'
 import { useToken, useUsers } from 'hooks'
 import { UsersDispatchContext } from 'store'
 
@@ -20,6 +27,7 @@ export function Signup() {
     positions: [],
     submitLoading: false,
     positionsLoading: false,
+    showModal: false,
     isFromValid: false,
     errors: {
       nameError: false,
@@ -42,6 +50,7 @@ export function Signup() {
     selectedRadioBtn,
     submitLoading,
     positionsLoading,
+    showModal,
     isFromValid,
     errors,
   } = formState
@@ -122,6 +131,7 @@ export function Signup() {
       positions: [],
       submitLoading: false,
       positionsLoading: false,
+      showModal: false,
       isFromValid: false,
       errors: {
         nameError: false,
@@ -134,6 +144,20 @@ export function Signup() {
         avatarErrorMessage: '',
       },
     })
+  }
+
+  const handleShowModal = () => {
+    setFormState((prevState) => ({
+      ...prevState,
+      showModal: true,
+    }))
+
+    setTimeout(() => {
+      setFormState((prevState) => ({
+        ...prevState,
+        showModal: false,
+      }))
+    }, 2000)
   }
 
   const handleSubmit = async (event) => {
@@ -160,6 +184,7 @@ export function Signup() {
         submitLoading: false,
       }))
       resetForm()
+      handleShowModal()
     } catch (error) {
       throw new Error(error)
     }
@@ -182,78 +207,82 @@ export function Signup() {
 
   return (
     <section id="signup" className={styles.signup}>
-      <div className="container">
-        <Title typeTitle="h2" color="black">
-          Working with POST request
-        </Title>
-        <form onSubmit={(event) => handleSubmit(event)}>
-          <OutlinedInput
-            type="text"
-            label="Your Name"
-            onChange={(event) => handleInputName(event)}
-            value={name}
-            error={errors.nameError}
-            errorMessage={errors.nameErrorMessage}
-          />
-          <OutlinedInput
-            type="text"
-            label="Email"
-            onChange={(event) => handleInputEmail(event)}
-            value={email}
-            error={errors.emailError}
-            errorMessage={errors.emailErrorMessage}
-          />
-          <OutlinedInput
-            type="text"
-            label="Phone"
-            helperText="+38 (XXX) XXX - XX - XX"
-            onChange={(event) => handleInputPhone(event)}
-            value={phone}
-            error={errors.phoneError}
-            errorMessage={errors.phoneErrorMessage}
-          />
-          <div className={styles.radio_btns}>
-            {positionsLoading ? (
+      {showModal ? (
+        <SuccessModal />
+      ) : (
+        <div className="container">
+          <Title typeTitle="h2" color="black">
+            Working with POST request
+          </Title>
+          <form onSubmit={(event) => handleSubmit(event)}>
+            <OutlinedInput
+              type="text"
+              label="Your Name"
+              onChange={(event) => handleInputName(event)}
+              value={name}
+              error={errors.nameError}
+              errorMessage={errors.nameErrorMessage}
+            />
+            <OutlinedInput
+              type="text"
+              label="Email"
+              onChange={(event) => handleInputEmail(event)}
+              value={email}
+              error={errors.emailError}
+              errorMessage={errors.emailErrorMessage}
+            />
+            <OutlinedInput
+              type="text"
+              label="Phone"
+              helperText="+38 (XXX) XXX - XX - XX"
+              onChange={(event) => handleInputPhone(event)}
+              value={phone}
+              error={errors.phoneError}
+              errorMessage={errors.phoneErrorMessage}
+            />
+            <div className={styles.radio_btns}>
+              {positionsLoading ? (
+                <Spiner />
+              ) : (
+                positions?.map((position) => (
+                  <div key={position.id} className={styles.radio_btn_wrapper}>
+                    <input
+                      id={`radio-${position.id}`}
+                      type="radio"
+                      name="radio-btn"
+                      checked={isRadioSelected(`radio-${position.id}`)}
+                      onChange={() =>
+                        setFormState((prevState) => ({
+                          ...prevState,
+                          selectedRadioBtn: `radio-${position.id}`,
+                        }))
+                      }
+                    />
+                    <label htmlFor={`radio-${position.id}`}>
+                      {position.name}
+                    </label>
+                  </div>
+                ))
+              )}
+            </div>
+            <div className={styles.dropzone}>
+              <Dropzone formState={formState} setFormState={setFormState}>
+                <button type="submit">Upload</button>
+                {avatar[0] ? <p>{avatar[0].name}</p> : <p>Upload your photo</p>}
+              </Dropzone>
+            </div>
+            {submitLoading ? (
               <Spiner />
             ) : (
-              positions?.map((position) => (
-                <div key={position.id} className={styles.radio_btn_wrapper}>
-                  <input
-                    id={`radio-${position.id}`}
-                    type="radio"
-                    name="radio-btn"
-                    checked={isRadioSelected(`radio-${position.id}`)}
-                    onChange={() =>
-                      setFormState((prevState) => ({
-                        ...prevState,
-                        selectedRadioBtn: `radio-${position.id}`,
-                      }))
-                    }
-                  />
-                  <label htmlFor={`radio-${position.id}`}>
-                    {position.name}
-                  </label>
-                </div>
-              ))
+              <Button
+                typeBtn="submit"
+                appearance={isFromValid ? 'primary' : 'disabled'}
+                text="Sign up"
+              />
             )}
-          </div>
-          <div className={styles.dropzone}>
-            <Dropzone formState={formState} setFormState={setFormState}>
-              <button type="submit">Upload</button>
-              {avatar[0] ? <p>{avatar[0].name}</p> : <p>Upload your photo</p>}
-            </Dropzone>
-          </div>
-          {submitLoading ? (
-            <Spiner />
-          ) : (
-            <Button
-              typeBtn="submit"
-              appearance={isFromValid ? 'primary' : 'disabled'}
-              text="Sign up"
-            />
-          )}
-        </form>
-      </div>
+          </form>
+        </div>
+      )}
     </section>
   )
 }

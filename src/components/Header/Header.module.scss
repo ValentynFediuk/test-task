@@ -1,5 +1,5 @@
 .header {
-    background: #FFFFFF;
+    background: #FFF;
     padding: 13px 0;
     position: fixed;
     z-index: 9;
@@ -10,6 +10,15 @@
 
 .wrapper {
     @include flex-between;
+    @include media-tablet {
+        padding-inline: 45px;
+    }
+    @include media-mobile {
+        padding-inline: 17px;
+    }
+    @include media-middle-mobile {
+        padding-inline: 1px;
+    }
 }
 
 .logo {

@@ -1,6 +1,8 @@
 .wrapper {
     width: 100%;
+
     --pure-material-safari-helper1: rgb(var(--pure-material-primary-rgb, 33, 150, 243));
+
     position: relative;
     display: inline-block;
     padding-top: 6px;
@@ -21,7 +23,7 @@
         border: solid 1px $input-color; /* Safari */
         border-top-color: transparent;
         border-radius: 4px;
-        padding: 14px 13px 14px;
+        padding: 14px 13px;
         width: 100%;
         height: inherit;
         color: $input-color;
@@ -146,7 +148,7 @@
         border-top-color: transparent;
     }
 
-    @media not all and (min-resolution: .001dpcm) {
+    @media not all and (resolution >= .001dpcm) {
         @supports (-webkit-appearance:none) {
             input,
             input + span,
@@ -167,36 +169,47 @@
 .wrapper.error {
     & input + span {
         color: $input-color-error;
+
         &::after, &::before {
+            border-top-width: 2px;
             border-top-color: $input-color-error;
         }
     }
+
     & input {
-        border: 1px solid $input-color-error;
+        border: 2px solid $input-color-error;
         border-top-color: transparent;
         color: $input-color-error;
         caret-color: $input-color-error;
     }
+
     .error_text {
         padding-top: 10px;
         color: $input-color-error;
+        font-size: 12px;
+        line-height: 14px;
+        margin-left: 15px;
     }
 
     &:hover > input + span::before,
     &:hover > input + span::after {
+        border-top-width: 2px;
         border-top-color: $input-color-error;
     }
 
     &:hover > input:not(:focus):placeholder-shown {
+        border-width: 2px;
         border-color: $input-color-error;
     }
 
     input:not(:focus):placeholder-shown + span::before,
     input:not(:focus):placeholder-shown + span::after {
+        border-top-width: 2px;
         border-top-color: $input-color-error;
     }
 
     input:not(:focus):placeholder-shown {
+        border-top-width: 2px;
         border-top-color: $input-color-error;
     }
 

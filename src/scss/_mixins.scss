@@ -9,3 +9,27 @@
     justify-content: space-between;
     align-items: center;
 }
+
+@mixin media-tablet {
+    @media (max-width: map-get($breakpoints, 'tablet-breakpoint')) {
+      @content;
+    }
+  }
+
+@mixin media-mobile {
+    @media (max-width: map-get($breakpoints, 'mobile-breakpoint')) {
+        @content;
+    }
+}
+
+@mixin media-middle-mobile {
+    @media (max-width: map-get($breakpoints, 'middle-mobile-breakpoint')) {
+        @content;
+    }
+}
+
+@mixin media-small-mobile {
+    @media (max-width: map-get($breakpoints, 'small-mobile-breakpoint')) {
+        @content;
+    }
+}

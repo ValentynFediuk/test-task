@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import React, { useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
 import styles from './Dropzone.module.scss'
@@ -78,7 +79,12 @@ export function Dropzone({ children, formState, setFormState }) {
   }
 
   return (
-    <div className={styles.dropzone}>
+    <div
+      className={clsx(
+        styles.dropzone,
+        errors.avatarError && styles.dropzone_error
+      )}
+    >
       <div
         role="button"
         tabIndex={0}

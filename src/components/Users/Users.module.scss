@@ -1,8 +1,10 @@
 .users {
     padding: 140px 0;
+
     h2 {
         margin-bottom: 50px;
     }
+
     button {
         display: flex;
         margin: 0 auto;
@@ -15,4 +17,15 @@
     gap: 29px;
     justify-content: center;
     margin-bottom: 50px;
+    @include media-tablet {
+        padding-inline: 45px;
+    }
+    @include media-mobile {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+        padding-inline: 17px;
+    }
+    @include media-middle-mobile {
+        grid-template-columns: repeat(1, 1fr);
+    }
 }
