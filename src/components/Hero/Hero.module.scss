@@ -1,7 +1,7 @@
 @supports not (background-image: url('assets/images/hero-bg.webp')) {
 	.hero {
 		background: bottom / cover no-repeat;
-		background-image: url('assets/images/hero-bg.jpeg');
+		background-image: url('assets/images/hero-bg.jpg');
 	}
 }
 @supports (background-image: url('assets/images/hero-bg.webp')) {
